@@ -26,7 +26,7 @@ import requests
 import json
 import pandas as pd
 
-my_key = ########
+my_key = "kDBzkj356PkV5bSBmTS0IhFSavIsk75CjR7PVxP1"
 
 # make a demo request
 r = requests.get('https://api.data.gov/nrel/alt-fuel-stations/v1/nearest.json?api_key='+my_key+'&location=Denver+CO')
@@ -40,6 +40,8 @@ r.text
 # format to json
 json_data = json.loads(r.text)
 
+json_data
+
 # work with this json object
 json_data['latitude']
 
@@ -50,9 +52,23 @@ Time to use the Dept of Commerce API
 '''
 
 r = requests.get('https://api.commerce.gov/api/blogs/?api_key='+my_key)
+if r.ok == True:
+    print ("We are all good! " + str(r))
+else:
+    print ("Error: " + str(r))
+
+# format to json
+while True:
+    try:
+        json_data = json.loads(r.text)
+        print("JSON loaded properly")
+        break
+    except Exception as e:
+        print("Error: " + str(e))
+        exit(1)
 
 # let's identify data in our object
-read_json(json_data['data'][0]['id'])
+json_data['data'][0]['id']
 
 # how many responses are in data?
 len(json_data['data'])

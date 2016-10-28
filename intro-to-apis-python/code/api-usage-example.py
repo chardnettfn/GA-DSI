@@ -37,6 +37,9 @@ r.json()['Year']
 r = requests.get('http://www.omdbapi.com/?t=blahblahblah&r=json&type=movie')
 r.status_code
 r.json()
+if r.json()['Response'] == 'False':
+    print "There's no movie here!"
+  
 
 # define a function to return the year
 def get_movie_year(title):
@@ -53,6 +56,7 @@ get_movie_year('blahblahblah')
 
 # create a smaller DataFrame for testing
 top_movies = movies.head().copy()
+print(top_movies)
 
 # write a for loop to build a list of years
 from time import sleep
@@ -61,8 +65,12 @@ for title in top_movies.title:
     years.append(get_movie_year(title))
     sleep(1)
 
+# print the array of years
+print(years)
 # check that the DataFrame and the list of years are the same length
 assert(len(top_movies) == len(years))
 
 # save that list as a new column
 top_movies['year'] = years
+
+print(top_movies)
